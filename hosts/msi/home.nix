@@ -63,6 +63,7 @@ in
       userEmail = "${gitEmail}";
       extraConfig = {
         push = { autoSetupRemote = true; };
+	safe = { directory = "/etc/nixos"; };
       };
     };
   };

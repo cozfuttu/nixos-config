@@ -14,8 +14,9 @@
 
   hardware.nvidia = {
     modesetting.enable = true; # Required.
-    powerManagement.enable = false; # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    powerManagement.finegrained = false; # Fine-grained power management. Experimental, turns off GPU when not in use.
+    powerManagement.enable = true; # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+    powerManagement.finegrained = true; # Fine-grained power management. Experimental, turns off GPU when not in use.
+    dynamicBoost.enable = true; # Whether to enable dynamic Boost balances power between the CPU and the GPU for improved performance on supported laptops using the nvidia-powerd daemon. For more information, see the NVIDIA docs, on Chapter 23. Dynamic Boost on Linux .
     open = false; # Use the NVidia open source kernel module (not to be confused with the independent third-party "nouveau" open source driver). Currently alpha-quality/buggy, so false is currently the recommended setting.
     nvidiaSettings = true; # Enable the Nvidia settings menu, accessible via `nvidia-settings`.
     package = config.boot.kernelPackages.nvidiaPackages.production;  # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -30,8 +31,8 @@
     };
   };
 
-  boot.extraModprobeConfig = "options nvidia \"NVreg_DynamicPowerManagement=0x02\"\n";
-  services.udev.extraRules = ''
+  # boot.extraModprobeConfig = "options nvidia \"NVreg_DynamicPowerManagement=0x02\"\n";
+  /* services.udev.extraRules = ''
   # Remove NVIDIA USB xHCI Host Controller devices, if present
   ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{remove}="1"
   
@@ -48,5 +49,5 @@
   # Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
   ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
   ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
-  '';
+  ''; */
 }

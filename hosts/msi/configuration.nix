@@ -11,8 +11,9 @@ in
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./users.nix
-      ../../modules/nvidia.nix
       ../../modules/battery.nix
+      ../../modules/nvidia.nix
+      ../../modules/intel.nix
     ];
 
   # Bootloader.
@@ -117,7 +118,23 @@ in
     xwayland.enable = true;
   };
 
+  # fish shell
   programs.fish.enable = true;
+
+  # thunar file explorer
+  programs.xfconf.enable = true;
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+      thunar-volman
+    ];
+  };
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  services.tumbler.enable = true; # Thumbnail support for images
+
+  # gnome keyring
+  services.gnome.gnome-keyring.enable = true;
 
  /*  programs.git = {
     enable = true;
@@ -169,6 +186,10 @@ in
 
   # docker
   virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
 
   # vpn (using custom openvpn server right now so no need for this)
   # services.mullvad-vpn.enable = true;

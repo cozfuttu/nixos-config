@@ -25,6 +25,7 @@ with lib;
       in
       concatStrings [
 	''
+	  env = AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0
           exec-once = sleep .5 && swww init
           exec-once = sleep .5 && waybar
 	  monitor=eDP-1,preferred,1920x0,1
@@ -61,7 +62,7 @@ with lib;
           windowrulev2 = opacity 0.9 0.7, class:^(Brave)$
           windowrulev2 = opacity 0.9 0.7, class:^(thunar)$
 	  bind = ${modifier},Q,killactive,
-	  bind = ${modifier},F,fullscreen,
+	  bind = ${modifier},F,fullscreen,1
 	  bind = ${modifier}SHIFT,F,togglefloating,
 	  bind = ${modifier}SHIFT,left,movewindow,l
           bind = ${modifier}SHIFT,right,movewindow,r
